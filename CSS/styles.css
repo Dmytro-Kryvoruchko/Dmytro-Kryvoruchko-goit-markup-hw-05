@@ -20,7 +20,10 @@
 
   --primary-font: "Roboto", sans-serif;
   --secondary-font: "Raleway", sans-serif;
-  --background-image: ;
+
+  --transition: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* --animation: transition-property:backgound-color; transition-duration:250ms; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); */
 }
 body {
   font-family: var(--primary-font);
@@ -138,6 +141,7 @@ button {
 }
 .menu-link {
   display: block;
+  position: relative;
   padding: 32px 0;
 
   color: var(--title-text-color);
@@ -146,10 +150,25 @@ button {
   font-size: inherit;
   line-height: 1.14;
   letter-spacing: 0.02em;
+  transition: color var(--transition);
 }
+
 .menu-link:hover,
 .menu-link:focus {
   color: var(--accent-color);
+}
+
+.menu-link.current::after {
+  content: "";
+  display: block;
+  bottom: -1px;
+
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background-color: var(--accent-color);
+
+  position: absolute;
 }
 
 .current {
@@ -174,6 +193,7 @@ button {
   line-height: 1.14;
   letter-spacing: 0.02em;
   color: var(--paragraph-text-color);
+  transition: color var(--transition);
 }
 
 .contacts-link:hover,
@@ -186,6 +206,7 @@ button {
   order: -1;
 
   fill: currentColor;
+  transition: fill var(--transition);
 }
 
 .icon-smartphone {
@@ -193,6 +214,7 @@ button {
   order: -1;
 
   fill: currentColor;
+  transition: fill var(--transition);
 }
 
 .contacts-link:hover .icon-smartphone,
@@ -243,6 +265,7 @@ button {
 
   background-color: var(--accent-color);
   color: var(--primary-white-color);
+  transition: background-color var(--transition);
 }
 
 .order-btn:hover,
@@ -271,6 +294,7 @@ button {
   height: 120px;
   justify-content: center;
   align-items: center;
+
   background-color: var(--secondary-back-color);
   border-radius: 4px;
   margin-bottom: 30px;
@@ -320,7 +344,27 @@ button {
   letter-spacing: inherit;
   color: var(--title-text-color);
 }
+.we-do-item-wrapper {
+  position: relative;
+}
+.we-do-desc {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 70px;
 
+  background-color: rgba(47, 48, 58, 0.8);
+  padding-top: 27px;
+  padding-bottom: 27px;
+
+  font-weight: 700;
+  font-size: inherit;
+  line-height: 16px;
+  text-align: center;
+  letter-spacing: inherit;
+  text-transform: uppercase;
+  color: var(--primary-white-color);
+}
 /* /WHAT WE DO SECTION */
 
 /* OUR TEAM SECTION */
@@ -380,6 +424,7 @@ button {
   height: 44px;
   border-radius: 50%;
   color: var(--main-fill-color);
+  transition: background-color var(--transition), color var(--transition);
 }
 
 .social-list-link:hover,
@@ -415,6 +460,7 @@ button {
   border: 1px solid var(--secondary-border-color);
   border-radius: 4px;
   color: var(--main-fill-color);
+  transition: color var(--transition), border var(--transition);
 }
 
 .customers-list-link:hover,
@@ -456,6 +502,8 @@ button {
 
   background: var(--secondary-back-color);
   color: var(--title-text-color);
+  transition: background-color var(--transition), color var(--transition),
+    box-shadow var(--transition);
 }
 .filter-btn:hover,
 .filter-btn:focus {
@@ -477,6 +525,7 @@ button {
 
 .portfolio-card-link {
   display: block;
+  transition: box-shadow var(--transition);
 }
 
 .portfolio-card-link:hover,
@@ -484,6 +533,37 @@ button {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
+.overlay-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: auto;
+
+  transform: translate(0, 100%);
+  transition: transform var(--transition);
+
+  width: 100%;
+  height: 100%;
+  padding: 63px 24px;
+
+  color: var(--primary-white-color);
+  background-color: rgba(33, 150, 243, 0.9);
+
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: inherit;
+}
+
+.portfolio-card-link:hover .overlay,
+.portfolio-card-link:focus .overlay {
+  transform: translate(0, 0);
+}
 .portfolio-card-desc {
   padding: 20px 24px;
   border: 1px solid var(--primary-border-color);
@@ -556,6 +636,7 @@ button {
   font-size: inherit;
   line-height: 1.71;
   letter-spacing: inherit;
+  transition: color var(--transition);
 }
 .contacts-footer-link:hover,
 .contacts-footer-link:focus {
@@ -590,6 +671,8 @@ button {
   height: 44px;
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.1);
+  transition: background-color var(--transition);
+
   fill: var(--primary-white-color);
 }
 
@@ -598,4 +681,73 @@ button {
   background-color: var(--accent-color);
 }
 
-/* /FOOTER */ ;
+/* /FOOTER */
+
+/* BACKDROP_MODAL */
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 100;
+  transition: opacity var(--transition), visibility var(--transition);
+}
+
+.backdrop.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.modal-form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 528px;
+  height: 580px;
+  transform: scale(1) translate(-50%, -50%);
+  background-color: var(--primary-white-color);
+  transition: transform var(--transition), opacity var(--transition),
+    visibility var(--transition);
+}
+.backdrop.is-hidden .modal-form {
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(1.5) translate(-50%, -50%);
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  border: 1px solid var(--main-fill-color);
+  border-radius: 50%;
+  transition: border-color var(--transition);
+}
+
+.modal-close-btn-icon {
+  transition: fill var(--transition);
+}
+
+.modal-close-btn:hover,
+.modal-close-btn:focus {
+  border-color: var(--accent-color);
+}
+
+.modal-close-btn:hover .modal-close-btn-icon,
+.modal-close-btn:focus .modal-close-btn-icon {
+  fill: var(--accent-color);
+}
+
+/* /BACKDROP_MODAL */
